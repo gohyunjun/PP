@@ -159,6 +159,7 @@ static int run_command(int nr_tokens, char* tokens[])
 
         return 1;
     }
+}
 
 
     /***********************************************************************
