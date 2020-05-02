@@ -126,17 +126,17 @@ static int run_command(int nr_tokens, char *tokens[])
 		return 0;
 	}
 
-    if (strncmp(tokens[0], "prompt", strlen("prompt"))) {
+    if (strncmp(tokens[0], "prompt", strlen("prompt")) == 0) {
 
         strcpy(__prompt, tokens[1]);
 
     }
-    else if (strncmp(tokens[0], "cd", strlen("cd"))) {
+    else if (strncmp(tokens[0], "cd", strlen("cd")) == 0) {
 
         strcpy(__prompt, tokens[1]);
     }
 
-    else if (strncmp(tokens[0], "for", strlen("for"))) {
+    else if (strncmp(tokens[0], "for", strlen("for")) == 0) {
 
         char* tokens2[nr_tokens - 2];
         int num = (int)*tokens[1];
