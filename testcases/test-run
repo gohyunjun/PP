@@ -1,0 +1,5 @@
+/bin/echo hello world
+echo stay home. save lives. help stop coronavirus
+non_existing binary
+echo sleep 20
+./toy arg1 arg2 arg3 arg4 arg5
