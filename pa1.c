@@ -141,6 +141,7 @@ static int run_command(int nr_tokens, char *tokens[])
             if (execvp(tokens[0], tokens) < 0) {
                 fprintf(stdout, "\nCould not execute command..");
             }
+            fflush();
             return 0;
         }
         else {
