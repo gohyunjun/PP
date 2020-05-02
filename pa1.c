@@ -142,7 +142,7 @@ static int run_command(int nr_tokens, char *tokens[])
         char* tokens2[nr_tokens - 2];
         int num = (int)*tokens[1];
 
-        for (int i = 0; tokens[i]; i++) {
+        for (int i = 0; i < nr_tokens-2; i++) {
             tokens2[i] = tokens[i + 2];
         }
 
