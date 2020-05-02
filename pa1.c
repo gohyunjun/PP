@@ -163,7 +163,7 @@ static int run_command(int nr_tokens, char *tokens[])
                 fprintf(stderr, "No such file or directory\n");
                 return 0;
             }
-            fflush();
+            fflush(stdout);
         }
         else {
             while (wait(&status) != pid);
