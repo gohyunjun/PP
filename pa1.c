@@ -80,6 +80,7 @@ int parse_command(char *command, int *nr_tokens, char *tokens[])
             for (;;) {
                 if (*curr == '\"') {
                     *curr = '\0';
+                    curr++;
                     break;
                 }
                 curr++;
