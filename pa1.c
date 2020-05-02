@@ -132,20 +132,14 @@ static int run_command(int nr_tokens, char *tokens[])
         }
     }
     else {
-        pid_t pid = fork();
+        pid_t pid;
+        int status;
 
-        if (pid == -1) {
-            return 0;
+        if (fork()) {
+            wait(&status);
         }
-        else if (pid == 0) {
-            if (execvp(tokens[0], tokens) < 0) {
-                fprintf(stdout, "\nCould not execute command..");
-            }
-            fflush();
-            return 0;
-        }
-        else {
-            wait(NULL);
+
+        if (execvp(tokens[0], tokens) < 0) {
             return 0;
         }
     }
