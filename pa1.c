@@ -134,7 +134,12 @@ static int run_command(int nr_tokens, char *tokens[])
     }
     else if (strncmp(tokens[0], "cd", strlen("cd")) == 0) {
 
-        strcpy(__prompt, tokens[1]);
+        if (strncmp(tokens[1], "~", strlen("~")) == 0) {
+            chdir(getenv("HOME"));
+        }
+        else {
+            chdir(tokens[1]);
+        }
     }
 
     else if (strncmp(tokens[0], "for", strlen("for")) == 0) {
@@ -163,7 +168,7 @@ static int run_command(int nr_tokens, char *tokens[])
                 fprintf(stderr, "No such file or directory\n");
                 return 0;
             }
-            fflush(stdout);
+            fflush(NULL);
         }
         else {
             while (wait(&status) != pid);
