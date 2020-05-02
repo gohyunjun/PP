@@ -164,6 +164,9 @@ static int run_command(int nr_tokens, char *tokens[])
             return 0;
         }
         else if (pid == 0) {
+
+            sleep(1);
+
             if (execvp(tokens[0], tokens) < 0) {
                 fprintf(stderr, "No such file or directory\n");
                 return 0;
@@ -172,15 +175,10 @@ static int run_command(int nr_tokens, char *tokens[])
         }
         else {
             while (wait(&status) != pid);
+
         }
 
     }
-
-	/*
-	fork();
-	exec();
-	...
-	*/
 
 	return 1;
 }
