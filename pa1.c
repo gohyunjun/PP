@@ -18,6 +18,8 @@
 #include <string.h>
 #include <getopt.h>
 #include <ctype.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 #include "types.h"
 
@@ -145,6 +147,7 @@ static int run_command(int nr_tokens, char *tokens[])
             wait(NULL);
             return 0;
         }
+    }
 
 	/*
 	fork();
