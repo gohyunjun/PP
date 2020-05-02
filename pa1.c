@@ -69,11 +69,29 @@ int parse_command(char *command, int *nr_tokens, char *tokens[])
 	int token_started = false;
 	*nr_tokens = 0;
 
-	while (*curr != '\0') {  
+	while (*curr != '\0') {
+
+        if (*curr == '\"') {
+            curr++;
+
+            tokens[*nr_tokens] = curr;
+            *nr_tokens += 1;
+
+            for (;;) {
+                if (*curr == '\"') {
+                    *curr = '\0';
+                    break;
+                }
+                curr++;
+            }
+        }
+
+
 		if (isspace(*curr)) {  
 			*curr = '\0';
 			token_started = false;
-		} else {
+		} 
+        else {
 			if (!token_started) {
 				tokens[*nr_tokens] = curr;
 				*nr_tokens += 1;
@@ -132,16 +150,23 @@ static int run_command(int nr_tokens, char *tokens[])
         }
     }
     else {
+
         pid_t pid;
         int status;
 
-        if (fork()) {
-            wait(&status);
-        }
-
-        if (execvp(tokens[0], tokens) < 0) {
+        if ((pid = fork()) < 0) {
             return 0;
         }
+        else if (pid == 0) {
+            if (execvp(tokens[0], *tokens) < 0) {
+                fprintf(stderr, "No such file or directory\n");
+                return 0;
+            }
+        }
+        else {
+            while (wait(&status) != pid);
+        }
+
     }
 
 	/*
