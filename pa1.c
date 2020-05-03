@@ -129,29 +129,20 @@ static int run_command(int nr_tokens, char* tokens[])
     if (strncmp(tokens[0], "for", strlen("for")) == 0) {
 
         num = atoi(tokens[1]);
+        tokens[2] = NULL;
 
-        int idx = 3;
+        int idx = 3; // for문을 제외한 배열이 시작하는 index
 
-        count++;
 
         if (strncmp(tokens[2], "for", strlen("for")) == 0) {
 
             for (int i = 2; (strncmp(tokens[i], "for", strlen("for")) == 0); i += 2) {
                 num *= atoi(tokens[i + 1]);
                 idx += 2;
-                count++;
+                tokensn[i + 1] = NULL;
+                
             }
         }
-
-        int k = 0;
-
-        char* new_tokens[nr_tokens - (count * 2)];
-
-        for (int i = 0; i < nr_tokens - (count * 2); i++) {
-            new_tokens[k] = tokens[idx + k];
-            k++;
-        }
-        strcpy(*tokens, *new_tokens);
     }
     if (num != 0) {
 
@@ -215,18 +206,18 @@ static int run_command(int nr_tokens, char* tokens[])
     }
 
     else {
-        if (strncmp(tokens[0], "prompt", strlen("prompt")) == 0) {
+        if (strncmp(tokens[idx], "prompt", strlen("prompt")) == 0) {
 
-            strcpy(__prompt, tokens[1]);
+            strcpy(__prompt, tokens[idx+1]);
 
         }
-        else if (strncmp(tokens[0], "cd", strlen("cd")) == 0) {
+        else if (strncmp(tokens[idx], "cd", strlen("cd")) == 0) {
 
-            if (strncmp(tokens[1], "~", strlen("~")) == 0) {
+            if (strncmp(tokens[idx+1], "~", strlen("~")) == 0) {
                 chdir(getenv("HOME"));
             }
             else {
-                chdir(tokens[1]);
+                chdir(tokens[idx+1]);
             }
         }
         else {
@@ -240,7 +231,7 @@ static int run_command(int nr_tokens, char* tokens[])
             }
             else if (pid == 0) {
 
-                if (execvp(tokens[0], tokens) < 0) {
+                if (execvp(tokens[idx], tokens+idx) < 0) {
                     fprintf(stderr, "No such file or directory\n");
                     return 0;
                 }
