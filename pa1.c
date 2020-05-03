@@ -144,7 +144,7 @@ static int run_command(int nr_tokens, char* tokens[])
 
             if (strncmp(tokens[idx], "prompt", strlen("prompt")) == 0) {
 
-                for (int i; i < num; i++) {
+                for (int i = 0; i < num; i++) {
                     strcpy(__prompt, tokens[idx + 1]);
                 }
 
@@ -153,12 +153,12 @@ static int run_command(int nr_tokens, char* tokens[])
             else if (strncmp(tokens[idx], "cd", strlen("cd")) == 0) {
 
                 if (strncmp(tokens[idx + 1], "~", strlen("~")) == 0) {
-                    for (int i; i < num; i++) {
+                    for (int i = 0; i < num; i++) {
                         chdir(getenv("HOME"));
                     }
                 }
                 else {
-                    for (int i; i < num; i++) {
+                    for (int i = 0; i < num; i++) {
                         chdir(tokens[idx + 1]);
                     }
                 }
