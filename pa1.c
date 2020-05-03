@@ -148,7 +148,7 @@ static int run_command(int nr_tokens, char *tokens[])
         int num = (int)*tokens[1];
 
         for (int i = 0; i < nr_tokens-2; i++) {
-            strcpy(tokens2[i], tokens[i + 2]);
+            tokens2[i] = tokens[i + 2];
         }
 
         for (int i = 0; i < num;) {
@@ -165,17 +165,15 @@ static int run_command(int nr_tokens, char *tokens[])
         }
         else if (pid == 0) {
 
-            sleep(1);
-
             if (execvp(tokens[0], tokens) < 0) {
                 fprintf(stderr, "No such file or directory\n");
                 return 0;
             }
             fflush(NULL);
+            return 0;
         }
         else {
-            while (wait(&status) != pid);
-
+            wait(&status);
         }
 
     }
