@@ -162,6 +162,7 @@ static int run_command(int nr_tokens, char *tokens[])
 
         if ((pid = fork()) > 0) {
             wait(&status);
+            fflush(stdin);
         }
         else if (pid == 0) {
 
@@ -173,7 +174,7 @@ static int run_command(int nr_tokens, char *tokens[])
         }
         else {
 
-            return 0;
+            return -1;
         }
 
     }
