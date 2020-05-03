@@ -124,7 +124,7 @@ static int run_command(int nr_tokens, char* tokens[])
     /* This function is all yours. Good luck! */
 
     int num = 0;
-    int idx = 3; // for문을 제외한 배열이 시작하는 index
+    int idx = 2; // for문을 제외한 배열이 시작하는 index
 
     if (strncmp(tokens[0], "for", strlen("for")) == 0) {
 
