@@ -156,7 +156,7 @@ static int run_command(int nr_tokens, char* tokens[])
         }
 
         for (int i = 0; i < num;) {
-            printf("%d", num);
+            fprintf(stderr ,"%d", num);
             run_command(nr_tokens - 2, tokens2);
         }
     }
