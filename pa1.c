@@ -156,7 +156,7 @@ static int run_command(int nr_tokens, char* tokens[])
             return 0;
         }
 
-        else if (pid == 0) {
+        else if (loop_pid == 0) {
 
 
     if (strncmp(tokens[0], "prompt", strlen("prompt")) == 0) {
@@ -180,7 +180,7 @@ static int run_command(int nr_tokens, char* tokens[])
         fflush(stdin);
 
         if ((pid = fork()) > 0) {
-            wait(&status2);
+            wait(&status);
         }
         else if (pid == 0) {
 
