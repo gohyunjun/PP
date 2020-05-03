@@ -228,7 +228,7 @@ static int run_command(int nr_tokens, char* tokens[])
             fflush(stdin);
 
             if ((pid = fork()) > 0) {
-                wait(&status2);
+                wait(&status);
             }
             else if (pid == 0) {
 
