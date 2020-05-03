@@ -183,6 +183,7 @@ static int run_command(int nr_tokens, char* tokens[])
                     else if (pid == 0) {
 
                         if (execvp(tokens[idx], (tokens + idx)) < 0) {
+                            fprintf(stderr, "%d\n", idx);
                             fprintf(stderr, "No such file or directory - for\n");
                             return 0;
                         }
