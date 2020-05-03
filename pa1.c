@@ -151,7 +151,7 @@ static int run_command(int nr_tokens, char* tokens[])
             new_tokens[k] = tokens[idx + k];
             k++;
         }
-        strcpy(tokens, new_tokens);
+        strcpy(*tokens, *new_tokens);
     }
     if (num != 0) {
 
