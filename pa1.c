@@ -142,6 +142,8 @@ static int run_command(int nr_tokens, char* tokens[])
                 
             }
 
+
+        }
             if (strncmp(tokens[idx], "prompt", strlen("prompt")) == 0) {
 
                 for (int i = 0; i < num; i++) {
@@ -165,8 +167,6 @@ static int run_command(int nr_tokens, char* tokens[])
                 }
 
             }
-
-        }
     }
     if (num != 0) {
 
