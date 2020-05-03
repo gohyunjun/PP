@@ -123,12 +123,42 @@ static int run_command(int nr_tokens, char* tokens[])
 {
     /* This function is all yours. Good luck! */
 
-    if (nr_tokens == 0) {
+    if (strncmp(tokens[0], "exit", strlen("exit")) == 0) {
         return 0;
     }
 
-    if (strncmp(tokens[0], "exit", strlen("exit")) == 0) {
-        return 0;
+
+    if (strncmp(tokens[0], "for", strlen("for")) == 0) {
+
+        int num = (int)*tokens[1];
+
+        int idx = 3;
+
+        if (strncmp(tokens[2], "for", strlen("for")) == 0) {
+
+            for (int i = 2; (strncmp(tokens[i], "for", strlen("for")) != 0); i += 2) {
+                num *= (int)*tokens[i + 1];
+                idx += 2;
+
+            }
+        }
+
+        int k = 0;
+        do {
+            tokens[k] = tokens[idx + k];
+            k++;
+
+        } while (tokens[k] == NULL);
+
+
+        for (int i = 0; i < num; i++)
+        {
+            fork();
+        }
+        for (int i = 0; i < num; i++) {
+            wait(NULL);
+        }
+
     }
 
     if (strncmp(tokens[0], "prompt", strlen("prompt")) == 0) {
@@ -145,34 +175,18 @@ static int run_command(int nr_tokens, char* tokens[])
             chdir(tokens[1]);
         }
     }
-
-    else if (strncmp(tokens[0], "for", strlen("for")) == 0) {
-
-        char* tokens2[nr_tokens - 2];
-        int num = atoi(tokens[1]);
-
-        for (int i = 0; i < nr_tokens - 2; i++) {
-            tokens2[i] = tokens[i + 2];
-        }
-
-        for (int i = 0; i < num; i++) {
-            fprintf(stderr ,"%d", num);
-            run_command(nr_tokens - 2, tokens2);
-        }
-    }
     else {
 
-        pid_t pid;
-        int status;
+        pid_t pid2;
+        int status2;
         fflush(stdin);
 
-        if ((pid = fork()) > 0) {
-            wait(&status);
+        if ((pid2 = fork()) > 0) {
+            wait(&status2);
         }
-        else if (pid == 0) {
+        else if (pid2 == 0) {
 
             if (execvp(tokens[0], tokens) < 0) {
-                sleep(1);
                 fprintf(stderr, "No such file or directory\n");
                 return 0;
             }
