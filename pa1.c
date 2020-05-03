@@ -124,6 +124,7 @@ static int run_command(int nr_tokens, char* tokens[])
     /* This function is all yours. Good luck! */
 
     int num = 0;
+    int count = 0;
 
     if (strncmp(tokens[0], "for", strlen("for")) == 0) {
 
@@ -131,17 +132,19 @@ static int run_command(int nr_tokens, char* tokens[])
 
         int idx = 3;
 
+        count++;
+
         if (strncmp(tokens[2], "for", strlen("for")) == 0) {
 
             for (int i = 2; (strncmp(tokens[i], "for", strlen("for")) == 0); i += 2) {
                 num *= atoi(tokens[i + 1]);
                 idx += 2;
-
+                count++;
             }
         }
 
         int k = 0;
-        while (nr_tokens - 1 > idx + k) {
+        while (nr_tokens -  (count * 2)) {
             tokens[k] = tokens[idx + k];
             k++;
 
@@ -151,13 +154,15 @@ static int run_command(int nr_tokens, char* tokens[])
 
         for (int i = 0; i < num; i++) {
 
+            
+            fflush(stdin);
+
             pid_t loop_pid = fork();
             if (loop_pid < 0) {
                 return 0;
             }
 
             else if (loop_pid == 0) {
-
 
                 if (strncmp(tokens[0], "prompt", strlen("prompt")) == 0) {
 
