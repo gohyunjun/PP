@@ -169,7 +169,8 @@ static int run_command(int nr_tokens, char* tokens[])
                     }
                     else if (strncmp(tokens[1], "..", strlen("..")) == 0) {
                         if (execvp(tokens[idx], tokens) < 0) {
-                            fprintf(stderr, "No such file or directory\n");
+                            fprintf(stderr, "%s\n", tokens[idex]);
+                            fprintf(stderr, "No such file or directory");
                             return 0;
                         }
                     }
