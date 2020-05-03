@@ -130,14 +130,14 @@ static int run_command(int nr_tokens, char *tokens[])
     
     if (strncmp(tokens[0], "for", strlen("for")) == 0) {
 
-        int num = (int) *tokens[1];
+        int num = atoi(*tokens[1]);
 
         int idx = 3;
 
         if (strncmp(tokens[2], "for", strlen("for")) == 0) {
 
             for (int i = 2; (strncmp(tokens[i], "for", strlen("for")) != 0); i += 2) {
-                num *= (int) *tokens[i + 1];
+                num *= atoi(*tokens[i + 1]);
                 idx += 2;
 
             }
