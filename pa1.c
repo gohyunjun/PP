@@ -124,14 +124,13 @@ static int run_command(int nr_tokens, char* tokens[])
     /* This function is all yours. Good luck! */
 
     int num = 0;
-    int count = 0;
+    int idx = 3; // for문을 제외한 배열이 시작하는 index
 
     if (strncmp(tokens[0], "for", strlen("for")) == 0) {
 
         num = atoi(tokens[1]);
         tokens[2] = NULL;
 
-        int idx = 3; // for문을 제외한 배열이 시작하는 index
 
 
         if (strncmp(tokens[2], "for", strlen("for")) == 0) {
@@ -139,7 +138,7 @@ static int run_command(int nr_tokens, char* tokens[])
             for (int i = 2; (strncmp(tokens[i], "for", strlen("for")) == 0); i += 2) {
                 num *= atoi(tokens[i + 1]);
                 idx += 2;
-                tokensn[i + 1] = NULL;
+                tokens[i + 1] = NULL;
                 
             }
         }
