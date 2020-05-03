@@ -139,7 +139,6 @@ static int run_command(int nr_tokens, char *tokens[])
             for (int i = 2; (strncmp(tokens[i], "for", strlen("for")) != 0); i += 2) {
                 num *= (int) *tokens[i + 1];
                 idx += 2;
-                idx_2 += 2;
 
             }
         }
@@ -149,7 +148,7 @@ static int run_command(int nr_tokens, char *tokens[])
             tokens[k] = tokens[idx + k];
             k++;
 
-        } while(tokens[k] == NULL)
+        } while (tokens[k] == NULL);
         
 
         for (int j = 0; j < num; j++) {
