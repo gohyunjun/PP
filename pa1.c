@@ -143,8 +143,8 @@ static int run_command(int nr_tokens, char *tokens[])
             }
         }
 
+        int k = 0;
         do {
-            int k = 0;
             tokens[k] = tokens[idx + k];
             k++;
 
