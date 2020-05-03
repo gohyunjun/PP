@@ -160,8 +160,8 @@ static int run_command(int nr_tokens, char *tokens[])
         pid_t pid;
         int status;
 
-        if ((pid = fork()) < 0) {
-            return 0;
+        if ((pid = fork()) > 0) {
+            wait(&status);
         }
         else if (pid == 0) {
 
@@ -173,7 +173,8 @@ static int run_command(int nr_tokens, char *tokens[])
         }
         else {
             fflush(stdin);
-            wait(&status);
+
+            return 0;
         }
 
     }
