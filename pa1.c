@@ -150,6 +150,9 @@ static int run_command(int nr_tokens, char* tokens[])
             
             fflush(stdin);
             int status;
+            int plz_1 = 0;
+            int plz_2 = 0;
+            int plz_3 = 0;
 
             pid_t loop_pid = fork();
             if (loop_pid < 0) {
@@ -160,21 +163,26 @@ static int run_command(int nr_tokens, char* tokens[])
 
                 if (strncmp(tokens[idx], "prompt", strlen("prompt")) == 0) {
 
-                    strcpy(__prompt, tokens[idx + 1]);
-                    fprintf(stderr, "%s\n", __prompt);
-                    return 0;
+
+                    plz_1++;
+
+    
 
                 }
                 else if (strncmp(tokens[idx], "cd", strlen("cd")) == 0) {
 
+
                     if (strncmp(tokens[idx + 1], "~", strlen("~")) == 0) {
-                        chdir(getenv("HOME"));
+                    
+                        plz_2++;
+                        
                     }
                     else {
-                        chdir(tokens[idx + 1]);
+
+                        plz_3++;
+
                     }
 
-                    return 0;
                 }
                 else {
 
@@ -204,6 +212,26 @@ static int run_command(int nr_tokens, char* tokens[])
                 return 0;
             }
             else {
+
+                if (plz_1 > 0) {
+                    for (int i = 0; i < plz_1; i++) {
+                        strcpy(__prompt, tokens[idx + 1]);
+                    }
+                }
+                
+                if (plz_2 > 0) {
+                    for (int i = 0; i < plz_2; i++) {
+                        chdir(getenv("HOME"));
+                    }
+                }
+                
+                if (plz_3 > 0) {
+                    for (int i = 0; i < plz_3; i++) {
+                        chdir(tokens[idx + 1]);
+                    }
+                }
+
+
                 wait(&status);
             }
 
