@@ -159,10 +159,10 @@ static int run_command(int nr_tokens, char *tokens[])
  
         pid_t pid;
         int status;
+        fflush(stdin);
 
         if ((pid = fork()) > 0) {
             wait(&status);
-            fflush(stdin);
         }
         else if (pid == 0) {
 
