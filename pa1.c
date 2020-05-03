@@ -133,7 +133,7 @@ static int run_command(int nr_tokens, char* tokens[])
 
         if (strncmp(tokens[2], "for", strlen("for")) == 0) {
 
-            for (int i = 2; (strncmp(tokens[i], "for", strlen("for")) != 0); i += 2) {
+            for (int i = 2; (strncmp(tokens[i], "for", strlen("for")) == 0); i += 2) {
                 num *= atoi(tokens[i + 1]);
                 idx += 2;
 
@@ -335,3 +335,4 @@ int main(int argc, char* const argv[])
 
     return EXIT_SUCCESS;
 }
+.
