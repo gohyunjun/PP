@@ -172,7 +172,6 @@ static int run_command(int nr_tokens, char *tokens[])
             return 0;
         }
         else {
-            fflush(stdin);
 
             return 0;
         }
