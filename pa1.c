@@ -123,21 +123,18 @@ static int run_command(int nr_tokens, char* tokens[])
 {
     /* This function is all yours. Good luck! */
 
-    if (strncmp(tokens[0], "exit", strlen("exit")) == 0) {
-        return 0;
-    }
-
+    int num = 0;
 
     if (strncmp(tokens[0], "for", strlen("for")) == 0) {
 
-        int num = (int)*tokens[1];
+        num = atoi(tokens[1]);
 
         int idx = 3;
 
         if (strncmp(tokens[2], "for", strlen("for")) == 0) {
 
             for (int i = 2; (strncmp(tokens[i], "for", strlen("for")) != 0); i += 2) {
-                num *= (int)*tokens[i + 1];
+                num *= atoi(tokens[i + 1]);
                 idx += 2;
 
             }
@@ -149,17 +146,18 @@ static int run_command(int nr_tokens, char* tokens[])
             k++;
 
         } while (tokens[k] == NULL);
-
-
-        for (int i = 0; i < num; i++)
-        {
-            fork();
-        }
-        for (int i = 0; i < num; i++) {
-            wait(NULL);
-        }
-
     }
+    if (num != 0) {
+
+    for (int i = 0; i < num; i++) {
+
+        pid_t loop_pid = fork();
+        if (loop_pid < 0) {
+            return 0;
+        }
+
+        else if (pid == 0) {
+
 
     if (strncmp(tokens[0], "prompt", strlen("prompt")) == 0) {
 
@@ -177,14 +175,14 @@ static int run_command(int nr_tokens, char* tokens[])
     }
     else {
 
-        pid_t pid2;
-        int status2;
+        pid_t pid;
+        int status;
         fflush(stdin);
 
-        if ((pid2 = fork()) > 0) {
+        if ((pid = fork()) > 0) {
             wait(&status2);
         }
-        else if (pid2 == 0) {
+        else if (pid == 0) {
 
             if (execvp(tokens[0], tokens) < 0) {
                 fprintf(stderr, "No such file or directory\n");
@@ -196,7 +194,55 @@ static int run_command(int nr_tokens, char* tokens[])
 
             return -1;
         }
+        }
 
+    return 0;
+    }
+        else {
+            wait(NULL);
+        }
+
+    }
+
+    }
+
+    else {
+        if (strncmp(tokens[0], "prompt", strlen("prompt")) == 0) {
+
+            strcpy(__prompt, tokens[1]);
+
+        }
+        else if (strncmp(tokens[0], "cd", strlen("cd")) == 0) {
+
+            if (strncmp(tokens[1], "~", strlen("~")) == 0) {
+                chdir(getenv("HOME"));
+            }
+            else {
+                chdir(tokens[1]);
+            }
+        }
+        else {
+
+            pid_t pid;
+            int status;
+            fflush(stdin);
+
+            if ((pid = fork()) > 0) {
+                wait(&status2);
+            }
+            else if (pid == 0) {
+
+                if (execvp(tokens[0], tokens) < 0) {
+                    fprintf(stderr, "No such file or directory\n");
+                    return 0;
+                }
+                return 0;
+            }
+            else {
+
+                return -1;
+            }
+        }
     }
 
     return 1;
