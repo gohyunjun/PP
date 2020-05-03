@@ -129,7 +129,7 @@ static int run_command(int nr_tokens, char* tokens[])
     if (strncmp(tokens[0], "for", strlen("for")) == 0) {
 
         num = atoi(tokens[1]);
-        tokens[2] = NULL;
+        tokens[1] = NULL;
 
 
 
@@ -182,7 +182,7 @@ static int run_command(int nr_tokens, char* tokens[])
                     }
                     else if (pid == 0) {
 
-                        if (execvp(tokens[idx], (tokens + idx)) < 0) {
+                        if (execvp(tokens[idx], (tokens + idx) < 0) {
                             fprintf(stderr, "No such file or directory\n");
                             return 0;
                         }
