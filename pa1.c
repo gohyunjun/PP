@@ -145,7 +145,7 @@ static int run_command(int nr_tokens, char *tokens[])
     else if (strncmp(tokens[0], "for", strlen("for")) == 0) {
 
         char* tokens2[nr_tokens - 2];
-        int num = (int)*tokens[1];
+        int num = (int)tokens[1][0];
 
         for (int i = 0; i < nr_tokens-2; i++) {
             tokens2[i] = tokens[i + 2];
