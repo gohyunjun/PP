@@ -126,6 +126,51 @@ static int run_command(int nr_tokens, char *tokens[])
 	if (strncmp(tokens[0], "exit", strlen("exit")) == 0) {
 		return 0;
 	}
+    
+    
+    if (strncmp(tokens[0], "for", strlen("for")) == 0) {
+
+        int num = *tokens[1];
+
+        int idx = 3;
+        int idx_2 = 4;
+
+        if (strncmp(tokens[2], "for", strlen("for")) == 0) {
+
+            for (int i = 2; (strncmp(tokens[i], "for", strlen("for")) != 0); i += 2) {
+                num *= *tokens[i + 1];
+                idx += 2;
+                idx_2 += 2;
+
+            }
+        }
+
+        tokens[0] = tokens[idx];
+        tokens[1] = tokens[idx_2];
+
+        for (int j = 0; j < num; j++) {
+            pid_t pid;
+            int status;
+            fflush(stdin);
+
+            if ((pid = fork()) > 0) {
+                wait(&status);
+            }
+            else if (pid == 0) {
+
+                if (execvp(tokens[0], tokens) < 0) {
+                    fprintf(stderr, "No such file or directory\n");
+                    return 0;
+                }
+
+            }
+            else {
+
+                return -1;
+            }
+        }
+
+    }
 
     if (strncmp(tokens[0], "prompt", strlen("prompt")) == 0) {
 
@@ -141,30 +186,16 @@ static int run_command(int nr_tokens, char *tokens[])
             chdir(tokens[1]);
         }
     }
-
-    else if (strncmp(tokens[0], "for", strlen("for")) == 0) {
-
-        char* tokens2[nr_tokens - 2];
-        int num = (int)tokens[1][0];
-
-        for (int i = 0; i < nr_tokens-2; i++) {
-            tokens2[i] = tokens[i + 2];
-        }
-
-        for (int i = 0; i < num;i++) {
-            run_command(nr_tokens - 2, tokens2);
-        }
-    }
     else {
  
-        pid_t pid;
-        int status;
+        pid_t pid2;
+        int status2;
         fflush(stdin);
 
-        if ((pid = fork()) > 0) {
-            wait(&status);
+        if ((pid2 = fork()) > 0) {
+            wait(&status2);
         }
-        else if (pid == 0) {
+        else if (pid2 == 0) {
 
             if (execvp(tokens[0], tokens) < 0) {
                 fprintf(stderr, "No such file or directory\n");
