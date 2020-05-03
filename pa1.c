@@ -141,6 +141,30 @@ static int run_command(int nr_tokens, char* tokens[])
                 tokens[i + 1] = NULL;
                 
             }
+
+            if (strncmp(tokens[idx], "prompt", strlen("prompt")) == 0) {
+
+                for (int i; i < num; i++) {
+                    strcpy(__prompt, tokens[idx + 1]);
+                }
+
+
+            }
+            else if (strncmp(tokens[idx], "cd", strlen("cd")) == 0) {
+
+                if (strncmp(tokens[idx + 1], "~", strlen("~")) == 0) {
+                    for (int i; i < num; i++) {
+                        chdir(getenv("HOME"));
+                    }
+                }
+                else {
+                    for (int i; i < num; i++) {
+                        chdir(tokens[idx + 1]);
+                    }
+                }
+
+            }
+
         }
     }
     if (num != 0) {
@@ -158,23 +182,7 @@ static int run_command(int nr_tokens, char* tokens[])
 
             else if (loop_pid == 0) {
 
-                if (strncmp(tokens[idx], "prompt", strlen("prompt")) == 0) {
-
-                    strcpy(__prompt, tokens[idx + 1]);
-    
-
-                }
-                else if (strncmp(tokens[idx], "cd", strlen("cd")) == 0) {
-
-                    if (strncmp(tokens[idx + 1], "~", strlen("~")) == 0) {
-                        chdir(getenv("HOME"));
-                    }
-                    else {
-                        chdir(tokens[idx + 1]);
-                    }
-
-                }
-                else {
+                if ((strncmp(tokens[idx], "cd", strlen("cd")) != 0) && (strncmp(tokens[idx], "prompt", strlen("prompt")) != 0)) {
 
                     pid_t pid;
                     int status;
@@ -197,6 +205,7 @@ static int run_command(int nr_tokens, char* tokens[])
 
                         return -1;
                     }
+               
                 }
 
                 return 0;
