@@ -145,6 +145,7 @@ static int run_command(int nr_tokens, char* tokens[])
             if (strncmp(tokens[idx], "prompt", strlen("prompt")) == 0) {
 
                 for (int i = 0; i < num; i++) {
+                    fprintf(stderr, "asdsad");
                     strcpy(__prompt, tokens[idx + 1]);
                 }
 
