@@ -130,23 +130,27 @@ static int run_command(int nr_tokens, char *tokens[])
     
     if (strncmp(tokens[0], "for", strlen("for")) == 0) {
 
-        int num = *tokens[1];
+        int num = (int) *tokens[1];
 
         int idx = 3;
-        int idx_2 = 4;
 
         if (strncmp(tokens[2], "for", strlen("for")) == 0) {
 
             for (int i = 2; (strncmp(tokens[i], "for", strlen("for")) != 0); i += 2) {
-                num *= *tokens[i + 1];
+                num *= (int) *tokens[i + 1];
                 idx += 2;
                 idx_2 += 2;
 
             }
         }
 
-        tokens[0] = tokens[idx];
-        tokens[1] = tokens[idx_2];
+        do {
+            int k = 0;
+            tokens[k] = tokens[idx + k];
+            k++;
+
+        } while(tokens[k] == NULL)
+        
 
         for (int j = 0; j < num; j++) {
             pid_t pid;
