@@ -157,18 +157,18 @@ static int run_command(int nr_tokens, char* tokens[])
 
             else if (loop_pid == 0) {
 
-                if (strncmp(tokens[0], "prompt", strlen("prompt")) == 0) {
+                if (strncmp(tokens[idx], "prompt", strlen("prompt")) == 0) {
 
-                    strcpy(__prompt, tokens[1]);
+                    strcpy(__prompt, tokens[idx + 1]);
 
                 }
-                else if (strncmp(tokens[0], "cd", strlen("cd")) == 0) {
+                else if (strncmp(tokens[idx], "cd", strlen("cd")) == 0) {
 
-                    if (strncmp(tokens[1], "~", strlen("~")) == 0) {
+                    if (strncmp(tokens[idx + 1], "~", strlen("~")) == 0) {
                         chdir(getenv("HOME"));
                     }
                     else {
-                        chdir(tokens[1]);
+                        chdir(tokens[idx + 1]);
                     }
                 }
                 else {
@@ -182,7 +182,7 @@ static int run_command(int nr_tokens, char* tokens[])
                     }
                     else if (pid == 0) {
 
-                        if (execvp(tokens[0], tokens) < 0) {
+                        if (execvp(tokens[idx], tokens + idx) < 0) {
                             fprintf(stderr, "No such file or directory\n");
                             return 0;
                         }
@@ -205,18 +205,18 @@ static int run_command(int nr_tokens, char* tokens[])
     }
 
     else {
-        if (strncmp(tokens[idx], "prompt", strlen("prompt")) == 0) {
+        if (strncmp(tokens[0], "prompt", strlen("prompt")) == 0) {
 
-            strcpy(__prompt, tokens[idx+1]);
+            strcpy(__prompt, tokens[1]);
 
         }
-        else if (strncmp(tokens[idx], "cd", strlen("cd")) == 0) {
+        else if (strncmp(tokens[0], "cd", strlen("cd")) == 0) {
 
-            if (strncmp(tokens[idx+1], "~", strlen("~")) == 0) {
+            if (strncmp(tokens[1], "~", strlen("~")) == 0) {
                 chdir(getenv("HOME"));
             }
             else {
-                chdir(tokens[idx+1]);
+                chdir(tokens[1]);
             }
         }
         else {
@@ -230,7 +230,7 @@ static int run_command(int nr_tokens, char* tokens[])
             }
             else if (pid == 0) {
 
-                if (execvp(tokens[idx], tokens+idx) < 0) {
+                if (execvp(tokens[0], tokens) < 0) {
                     fprintf(stderr, "No such file or directory\n");
                     return 0;
                 }
