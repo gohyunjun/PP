@@ -161,6 +161,8 @@ static int run_command(int nr_tokens, char* tokens[])
                 if (strncmp(tokens[idx], "prompt", strlen("prompt")) == 0) {
 
                     strcpy(__prompt, tokens[idx + 1]);
+                    fprintf(stderr, "%s\n", __prompt);
+                    return 0;
 
                 }
                 else if (strncmp(tokens[idx], "cd", strlen("cd")) == 0) {
@@ -171,6 +173,8 @@ static int run_command(int nr_tokens, char* tokens[])
                     else {
                         chdir(tokens[idx + 1]);
                     }
+
+                    return 0;
                 }
                 else {
 
