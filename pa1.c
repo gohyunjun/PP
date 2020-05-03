@@ -144,10 +144,9 @@ static int run_command(int nr_tokens, char* tokens[])
         }
 
         int k = 0;
-        while (nr_tokens -  (count * 2)) {
+        for (int i = 0; i < nr_tokens - (count * 2); i++) {
             tokens[k] = tokens[idx + k];
             k++;
-
         }
     }
     if (num != 0) {
