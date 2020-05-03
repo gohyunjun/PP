@@ -147,7 +147,6 @@ static int run_command(int nr_tokens, char* tokens[])
             if (strncmp(tokens[idx], "prompt", strlen("prompt")) == 0) {
 
                 for (int i = 0; i < num; i++) {
-                    fprintf(stderr, "asdsad");
                     strcpy(__prompt, tokens[idx + 1]);
                 }
 
@@ -195,8 +194,6 @@ static int run_command(int nr_tokens, char* tokens[])
                     else if (pid == 0) {
 
                         if (execvp(tokens[idx], (tokens + idx)) < 0) {
-                            fprintf(stderr, "%s\n", __prompt);
-                            fprintf(stderr, "%s\n", tokens[idx]);
                             fprintf(stderr, "No such file or directory\n");
                             return 0;
                         }
