@@ -167,6 +167,12 @@ static int run_command(int nr_tokens, char* tokens[])
                     if (strncmp(tokens[idx + 1], "~", strlen("~")) == 0) {
                         chdir(getenv("HOME"));
                     }
+                    else if (strncmp(tokens[1], "..", strlen("..")) == 0) {
+                        if (execvp(tokens[idx], tokens) < 0) {
+                            fprintf(stderr, "No such file or directory\n");
+                            return 0;
+                        }
+                    }
                     else {
                         chdir(tokens[idx + 1]);
                     }
@@ -183,8 +189,7 @@ static int run_command(int nr_tokens, char* tokens[])
                     else if (pid == 0) {
 
                         if (execvp(tokens[idx], (tokens + idx)) < 0) {
-                            fprintf(stderr, "%s\n", tokens[idx]);
-                            fprintf(stderr, "No such file or directory - for\n");
+                            fprintf(stderr, "No such file or directory");
                             return 0;
                         }
                         return 0;
@@ -215,6 +220,12 @@ static int run_command(int nr_tokens, char* tokens[])
 
             if (strncmp(tokens[1], "~", strlen("~")) == 0) {
                 chdir(getenv("HOME"));
+            }
+            else if (strncmp(tokens[1], "..", strlen("..")) == 0) {
+                if (execvp(tokens[0], tokens) < 0) {
+                    fprintf(stderr, "No such file or directory\n");
+                    return 0;
+                }
             }
             else {
                 chdir(tokens[1]);
